@@ -11,7 +11,7 @@ import Prelude(Show, undefined)
 data Bool = True | False deriving Show
 
 exampleBool1 = True
-exampleBool2 = True
+exampleBool2 = False
 
 and True True = True
 and _ _ = False
@@ -19,8 +19,8 @@ and _ _ = False
 
 data Nat = Zero | Succ Nat deriving Show
 
-three = (Succ (Succ (Succ Zero)))
-five = (Succ (Succ three))
+three = Succ (Succ (Succ Zero))
+five = Succ (Succ three)
 
 add Zero Zero = Zero
 add Zero (Succ x) = (Succ x)
@@ -30,13 +30,19 @@ add (Succ x) (Succ y) = (Succ (add x (Succ y)))
 add' Zero anything = anything
 add' (Succ x) y = (Succ (add' x y))
 
+
+-- now write your own data type, for the colors of a stop light
+
 data Stoplight = Red | Yellow | Green deriving Show
 
-favoriteColor = Red
+favoriteColor = Green
 
-canGo Red = False
-canGo Yellow = True
 canGo Green = True
+canGo Yellow = True
+canGo Red = False
+
+canGo' Red = False
+canGo' _ = True
 
 
 data ListNat = NilNat | ConsNat Nat ListNat deriving Show
@@ -49,13 +55,13 @@ lengthOfListNat NilNat  = Zero
 lengthOfListNat (ConsNat _ x)  = Succ (lengthOfListNat x)
 
 
+
 data ListBool = NilBool | ConsBool Bool ListBool deriving Show
 
 exampleListBool = ConsBool True (ConsBool False NilBool)
 
 lengthOfListBool NilBool  = Zero
 lengthOfListBool (ConsBool _ y) = Succ (lengthOfListBool y)
-
 
 -- ... this get's very tiresome
 
@@ -66,7 +72,8 @@ exampleList = Cons Red (Cons Green Nil)
 length Nil = Zero
 length (Cons _ x) = Succ (length x)
 
--- data StudentYear = Freshman | Sophomore | Junior | Senior deriving Show -- where a means anything
+
+data StudentYear = Freshman | Sophomore | Junior | Senior deriving Show -- where a means anything
 
 exampleStudentYear = Freshman
 
@@ -76,8 +83,8 @@ expectedYearsToGraduate Senior = Succ Zero
 expectedYearsToGraduate Junior = Succ (expectedYearsToGraduate Senior)
 expectedYearsToGraduate Sophomore = three
 
-data Maybe a | Nothing | Just a deriving Show
 
+data Maybe a =  Nothing | Just a deriving Show
 
 -- how can we write the inverse?
 fromExpectedYearsToGraduate (Succ Zero) = Just Senior
@@ -85,8 +92,6 @@ fromExpectedYearsToGraduate (Succ (Succ Zero)) = Just Junior
 fromExpectedYearsToGraduate (Succ (Succ (Succ Zero))) = Just Sophomore
 fromExpectedYearsToGraduate (Succ (Succ (Succ (Succ Zero)))) = Just Freshman
 fromExpectedYearsToGraduate _ = Nothing
-
-
 
 
 -- what is the smallest datatype you can come up with?
@@ -106,4 +111,4 @@ data Craziests a = Wayne Bool StudentYear Stoplight
 
 				deriving Show
 
-exampleCraziests = Wayne True Sophomore Red
+exampleCraziests = Wayne True Sophomore Yellow
